@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:orientation="vertical" android:id="@+id/ErrorLayout">
+  
+	<TextView android:id="@+id/wrongpath" 
+		android:textColor="#000000"
+		android:background="#FF0000"
+		android:textSize="20sp"
+		android:textStyle="bold"
+		android:layout_gravity="center"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    	
+    <TextView android:text="Nessun file trovato: potresti non aver scaricato i file da 
+    visualizzare, oppure cambia la cartella in cui l'applicazione cerca i file.\n
+    ATTENZIONE: DECOMPRIMETE I FILE .zip PER LEGGERLI. NON RINOMIMATE LE CARTELLE MA DECOMPRIMETELE LASCIANDO IL LORO NOME
+    ORIGINALE"
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content"
+    	android:textSize="20sp"
+    	android:textStyle="bold"
+    	android:textColor="#ffffff"/>
+    
+    <Button android:paddingLeft="10sp" android:text="Scarica i file" android:id="@+id/b1" 
+    	android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <Button android:paddingLeft="10sp" android:text="Cambia le impostazioni di ricerca" android:id="@+id/b2"
+    	android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <Button android:text="Aiuto" android:id="@+id/helpButton"
+    	android:gravity="center" android:layout_gravity="center"
+    	android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>

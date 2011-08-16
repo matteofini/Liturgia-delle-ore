@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android" android:title="Impostazioni">
+  
+  <EditTextPreference
+  	android:title="percorso cartella"
+  	android:dialogTitle="percorso cartella"
+  	android:dialogMessage="esempio: /sdcard/download/MiaCartella/"
+  	android:defaultValue="/sdcard/download/"
+  	android:key="filepath"/>
+  	
+</PreferenceScreen>
