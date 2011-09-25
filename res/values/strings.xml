@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Liturgia delle ore</string>
-    <string name="help1">Premi <b>download</b> per scaricare il file dell\'archivio corrispondente.\n\n
-    Premi <b>Aggiorna</b> per aggiornare un archivio (es. la liturgia delle ore più recenti).\n\n
-    Premi <b>Leggi</b> per leggere l\'archivio. \n\n
-    Premi <b>MENU</b> sul tuo smartphone ed <b>Impostazioni</b> per modificare la cartella dove verranno scaricati e letti i file dei vari archivi.
-    </string>
-    <string name="label_link"><a href="http://www.maranatha.it">http://www.maranatha.it</a></string>
+	<string name="app_name">Liturgia delle ore</string>
+	<string name="label_link">
+		<a href="http://www.maranatha.it">http://www.maranatha.it</a>
+	</string>
+	<string name="button_download">Scarica</string>
+	<string name="button_read">Leggi</string>
+	<string name="button_upgdare">Aggiorna</string>
+	<string name="button_help">Aiuto</string>
+	<string name="button_setting">Impostazioni</string>
+	<string name="button_night">Notte</string>
+	<string name="button_day">Giorno</string>
+	<string name="label_top">"torna all'inizio"</string>
 </resources>

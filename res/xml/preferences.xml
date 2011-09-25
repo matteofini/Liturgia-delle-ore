@@ -3,9 +3,9 @@
   xmlns:android="http://schemas.android.com/apk/res/android" android:title="Impostazioni">
   
   <EditTextPreference
-  	android:title="percorso cartella"
-  	android:dialogTitle="percorso cartella"
-  	android:dialogMessage="esempio: /sdcard/download/MiaCartella/"
+  	android:title="percorso download"
+  	android:dialogTitle="percorso downlaod"
+  	android:dialogMessage="esempio: /sdcard/download/"
   	android:defaultValue="/sdcard/download/"
   	android:key="filepath"/>
   	
