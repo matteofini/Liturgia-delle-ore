@@ -1,29 +1,21 @@
 package com.matteofini.liturgiaore;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.Window;
-import android.view.accessibility.AccessibilityEvent;
-import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 
 public class HTMLViewerActivity extends Activity{
 
-	private MyWebView wv;
+	private WebView wv;
 	//private TextToSpeech mTts;
 	//private ReentrantLock TTSlock;
 
@@ -40,11 +32,9 @@ public class HTMLViewerActivity extends Activity{
     	}
     }	*/	
 	
-	
-	public class MyWebView extends WebView{
-		public MyWebView(Context context) {
-			super(context);
-		}	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
 	}
 	
 	
@@ -87,12 +77,13 @@ public class HTMLViewerActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
-		
-		this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
+		getWindow().requestFeature(Window.FEATURE_PROGRESS);		
         getWindow().setFeatureInt( Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
-		wv = new MyWebView(this);
+        RelativeLayout v = (RelativeLayout) getLayoutInflater().inflate(R.layout.htmlvieweractivity, null);
+		wv = (WebView) v.findViewById(R.id.webView1);
 		wv.setFocusable(true);
-		setContentView(wv);
+		setContentView(v);
+
 /*		mTts = new TextToSpeech(this, this);
 		TTSlock = new ReentrantLock();
 		TTSlock.lock();	*/

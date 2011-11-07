@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="Scarlet">#aa800000</color>
+    <color name="Gold">#80FFB90F</color>
+	<color name="Transparent">@android:color/transparent</color>
+	<color name="WhiteOpaque">#FFFFFFFF</color>
+	<color name="WhiteHalfOpaque">#80FFFFFF</color>
+	<color name="LigthBlue">#aa0060FF</color>
+	<color name="Brown">#aa5C3317</color>
+	<color name="Green">#aa006400</color>
+	<color name="Orange">#aaEE7600</color>
+	<color name="Purple">#aa551A8B</color>
+</resources>

@@ -1,20 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:id="@+id/Main" android:gravity="center"
-	android:contentDescription="schermata principale" android:focusable="true">
-
-	<ScrollView android:id="@+id/ScrollView1"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_alignParentTop="true" android:layout_above="@+id/label_link">
-		<LinearLayout android:orientation="vertical" android:id="@+id/ListContainer"
-			android:layout_height="fill_parent" android:layout_width="fill_parent"></LinearLayout>
+	android:id="@+id/Main" android:contentDescription="schermata principale"
+	android:background="@drawable/sfondo" android:gravity="center">
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:id="@+id/ScrollView1"
+		android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+		android:layout_above="@+id/ViewFlipper1">
+		<LinearLayout android:layout_height="wrap_content"
+			android:id="@+id/ListContainer" android:orientation="vertical"
+			android:layout_width="fill_parent">
+			<LinearLayout android:id="@+id/LinearLayout04"
+				android:layout_height="wrap_content" android:background="@drawable/selector_border"
+				android:orientation="vertical" style="@style/style_row"
+				android:layout_width="fill_parent">
+				<Button android:layout_height="wrap_content" style="@style/style_text"
+					android:text="Liturgia delle Ore" android:layout_width="fill_parent"
+					android:clickable="true" android:background="@drawable/selector"
+					android:id="@+id/button_liturgiaore"></Button>
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:background="@drawable/selector_border"
+				android:layout_height="wrap_content" style="@style/style_row"
+				android:id="@+id/LinearLayout05">
+				<Button style="@style/style_text" android:clickable="true"
+					android:background="@drawable/selector_blue" android:id="@+id/button_rosario"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:text="Rosario della B.V Maria"></Button>
+			</LinearLayout>
+			<LinearLayout android:id="@+id/LinearLayout01"
+				android:layout_height="wrap_content" android:background="@drawable/selector_border"
+				android:orientation="vertical" style="@style/style_row"
+				android:layout_width="fill_parent">
+				<Button android:text="4 sett. Salterio"
+					android:layout_height="wrap_content" style="@style/style_text"
+					android:layout_width="fill_parent" android:clickable="true"
+					android:id="@+id/button_4settSalterio" android:background="@drawable/selector_green"></Button>
+			</LinearLayout>
+			<LinearLayout android:id="@+id/linearLayout1"
+				android:layout_height="wrap_content" android:background="@drawable/selector_border"
+				android:orientation="vertical" style="@style/style_row"
+				android:layout_width="fill_parent">
+				<Button android:text="Breviarium Romanum"
+					android:layout_height="wrap_content" style="@style/style_text"
+					android:layout_width="fill_parent" android:clickable="true"
+					android:id="@+id/button_breviariumRomanum" android:background="@drawable/selector_brown"></Button>
+			</LinearLayout>
+			<LinearLayout android:id="@+id/LinearLayout07"
+				android:layout_height="wrap_content" android:background="@drawable/selector_border"
+				android:orientation="vertical" style="@style/style_row"
+				android:layout_width="fill_parent">
+				<Button android:text="La Sacra Bibbia" android:layout_height="wrap_content"
+					style="@style/style_text" android:layout_width="fill_parent"
+					android:clickable="true" android:id="@+id/button_bibbiaCEI"
+					android:background="@drawable/selector_gold"></Button>
+			</LinearLayout>
+			<LinearLayout android:id="@+id/LinearLayout08"
+				android:layout_height="wrap_content" android:background="@drawable/selector_border"
+				android:orientation="vertical" style="@style/style_row"
+				android:layout_width="fill_parent">
+				<Button android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:clickable="true"
+					android:text="Magistero della Chiesa" style="@style/style_text"
+					android:id="@+id/button_magisteroChiesa" android:background="@drawable/selector"></Button>
+			</LinearLayout>
+			<LinearLayout android:id="@+id/LinearLayout06"
+				android:layout_height="wrap_content" android:background="@drawable/selector_border"
+				android:orientation="vertical" style="@style/style_row"
+				android:layout_width="fill_parent">
+				<Button android:text="Preghiere" android:layout_height="wrap_content"
+					style="@style/style_text" android:layout_width="fill_parent"
+					android:clickable="true" android:id="@+id/button_preghiere"
+					android:background="@drawable/selector_green"></Button>
+			</LinearLayout>
+			<LinearLayout android:id="@+id/LinearLayout03"
+				android:layout_height="wrap_content" android:background="@drawable/selector_border"
+				android:orientation="vertical" style="@style/style_row"
+				android:layout_width="fill_parent">
+				<Button android:layout_height="wrap_content" style="@style/style_text"
+					android:text="Missale Romanum" android:layout_width="fill_parent"
+					android:clickable="true" android:background="@drawable/selector"
+					android:id="@+id/button_missaleRomanum"></Button>
+			</LinearLayout>
+			<LinearLayout style="@style/style_row"
+				android:layout_height="wrap_content" android:id="@+id/LinearLayout02"
+				android:orientation="vertical" android:background="@drawable/selector_border"
+				android:layout_width="fill_parent">
+				<Button style="@style/style_text" android:layout_height="wrap_content"
+					android:text="Rito della Messa" android:layout_width="fill_parent"
+					android:clickable="true" android:id="@+id/button_ritodellamessa"
+					android:background="@drawable/selector_purple"></Button>
+			</LinearLayout>
+			<LinearLayout style="@style/style_row"
+				android:layout_height="wrap_content" android:id="@+id/LinearLayout09"
+				android:orientation="vertical" android:background="@drawable/selector_border"
+				android:layout_width="fill_parent">
+				<Button style="@style/style_text" android:layout_height="wrap_content"
+					android:text="Concilio Vaticano II" android:layout_width="fill_parent"
+					android:clickable="true" android:background="@drawable/selector"
+					android:id="@+id/button_conciliovaticanoII"></Button>
+			</LinearLayout>
+			<LinearLayout style="@style/style_row"
+				android:layout_height="wrap_content" android:id="@+id/LinearLayout10"
+				android:orientation="vertical" android:background="@drawable/selector_border"
+				android:layout_width="fill_parent">
+				<Button style="@style/style_text" android:layout_height="wrap_content"
+					android:text="Catechismo della Chiesa" android:layout_width="fill_parent"
+					android:clickable="true" android:id="@+id/button_catechismo"
+					android:background="@drawable/selector_orange"></Button>
+			</LinearLayout>
+		</LinearLayout>
 	</ScrollView>
-	<TextView android:layout_alignParentBottom="true"
-		android:layout_height="wrap_content" android:layout_width="fill_parent"
-		android:id="@+id/label_link" android:gravity="center"
-		style="@android:style/TextAppearance.Large" android:text="@string/label_link"
-		android:autoLink="web" android:background="#000000"
-		android:contentDescription="link al sito di maranatha"
-		android:layout_alignParentRight="true"></TextView>
+	<ViewFlipper android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/ViewFlipper1"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true" android:background="#000000"
+		android:inAnimation="@anim/flipin" android:outAnimation="@anim/flipout"
+		android:flipInterval="3000">
+		<TextView android:layout_gravity="center"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:id="@+id/TextView03" android:gravity="center" android:text="LINK UTILI"></TextView>
+		<TextView android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:id="@+id/textView2" android:autoLink="web"
+			android:text="http://www.chiesacattolica.it" android:layout_width="fill_parent"
+			android:layout_gravity="center" android:gravity="center"></TextView>
+		<TextView android:layout_gravity="center"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:autoLink="web" android:id="@+id/TextView01" android:gravity="center"
+			android:text="http://www.vatican.va"></TextView>
+		<TextView android:layout_gravity="center" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="fill_parent" android:autoLink="web" android:id="@+id/textView1" android:text="http://www.maranatha.it" android:gravity="center"></TextView>
+		<TextView android:layout_gravity="center"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:autoLink="web" android:id="@+id/TextView02" android:gravity="center"
+			android:text="http://www.youcat.org"></TextView>
+		<TextView android:layout_gravity="center"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:id="@+id/TextView05" android:gravity="center" android:text="contatti:"></TextView>
+		<TextView android:layout_gravity="center"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:id="@+id/TextView04" android:gravity="center"
+			android:autoLink="email|web" android:text="mf.calimero@gmail.com"></TextView>
+	</ViewFlipper>
 </RelativeLayout>

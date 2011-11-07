@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:title="Impostazioni" android:icon="@drawable/setting"/>
-  <item android:title="Aiuto" android:icon="@drawable/help"/>
+  <group android:menuCategory="secondary">
+  	  <item android:title="vista classica" android:icon="@drawable/ic_menu_classicview"></item>
+	  <item android:title="Impostazioni" android:icon="@android:drawable/ic_menu_preferences"/>
+	  <item android:title="Aiuto" android:icon="@android:drawable/ic_menu_help"/>
+	  <item android:title="Disclaimer" android:icon="@android:drawable/ic_menu_info_details"/>
+  </group>
 </menu>

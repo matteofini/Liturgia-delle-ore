@@ -7,9 +7,4 @@
 	<string name="button_download">Scarica</string>
 	<string name="button_read">Leggi</string>
 	<string name="button_upgdare">Aggiorna</string>
-	<string name="button_help">Aiuto</string>
-	<string name="button_setting">Impostazioni</string>
-	<string name="button_night">Notte</string>
-	<string name="button_day">Giorno</string>
-	<string name="label_top">"torna all'inizio"</string>
 </resources>

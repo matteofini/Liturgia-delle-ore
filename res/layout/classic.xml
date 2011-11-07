@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:id="@+id/Main" android:contentDescription="schermata principale"
+	android:gravity="center" android:background="@drawable/cl_sfondo">
+	<TextView android:text="@string/label_link"
+		android:background="#000000" android:layout_width="fill_parent"
+		android:autoLink="web" android:layout_height="wrap_content"
+		style="@android:style/TextAppearance.Large" android:id="@+id/label_link"
+		android:contentDescription="link al sito di maranatha"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true" android:gravity="center" android:focusable="true"></TextView>
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:id="@+id/ScrollView1"
+		android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+		android:layout_above="@+id/label_link">
+		<LinearLayout android:layout_height="wrap_content"
+			android:id="@+id/ListContainer" android:orientation="vertical"
+			android:layout_width="fill_parent">
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:id="@+id/Liturgia">
+				<LinearLayout android:id="@+id/LinearLayout21"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+					<TextView style="@style/cl_title_style" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Liturgia"
+						android:id="@+id/cl_titolo" ></TextView>
+				</LinearLayout>
+				<LinearLayout android:id="@+id/LinearLayout19"
+					android:gravity="center" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:drawableTop="@drawable/ic_menu_download"
+						android:text="@string/button_download" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_scarica" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_refresh"
+						android:text="@string/button_upgdare" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_aggiorna" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_read" android:text="@string/button_read"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:id="@+id/cl_button_leggi" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:id="@+id/MessaLiturOre">
+				<LinearLayout android:id="@+id/LinearLayout18"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+					<TextView style="@style/cl_title_style" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Liturgia delle ore"
+						android:id="@+id/cl_titolo" ></TextView>
+				</LinearLayout>
+				<LinearLayout android:id="@+id/LinearLayout16"
+					android:gravity="center" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:drawableTop="@drawable/ic_menu_download"
+						android:text="@string/button_download" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_scarica" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_refresh"
+						android:text="@string/button_upgdare" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_aggiorna" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_read" android:text="@string/button_read"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:id="@+id/cl_button_leggi" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:id="@+id/Salterio4sett">
+				<LinearLayout android:id="@+id/LinearLayout15"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+					<TextView style="@style/cl_title_style" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Salterio 4 settimane"
+						android:id="@+id/cl_titolo" ></TextView>
+				</LinearLayout>
+				<LinearLayout android:id="@+id/LinearLayout13"
+					android:gravity="center" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:drawableTop="@drawable/ic_menu_download"
+						android:text="@string/button_download" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_scarica" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_refresh"
+						android:text="@string/button_upgdare" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_aggiorna" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_read" android:text="@string/button_read"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:id="@+id/cl_button_leggi" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Breviarium">
+				<LinearLayout android:id="@+id/LinearLayout12"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+					<TextView style="@style/cl_title_style" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Breviarium Romanum"
+						android:id="@+id/cl_titolo" ></TextView>
+				</LinearLayout>
+				<LinearLayout android:id="@+id/LinearLayout10"
+					android:gravity="center" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:drawableTop="@drawable/ic_menu_download"
+						android:text="@string/button_download" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_scarica" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_refresh"
+						android:text="@string/button_upgdare" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_aggiorna" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_read" android:text="@string/button_read"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:id="@+id/cl_button_leggi" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/BibbiaCEI">
+				<LinearLayout android:id="@+id/LinearLayout09"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+					<TextView style="@style/cl_title_style" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="La Sacra Bibbia"
+						android:id="@+id/cl_titolo" ></TextView>
+				</LinearLayout>
+				<LinearLayout android:id="@+id/LinearLayout07"
+					android:gravity="center" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:drawableTop="@drawable/ic_menu_download"
+						android:text="@string/button_download" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_scarica" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_refresh"
+						android:text="@string/button_upgdare" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_aggiorna" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_read" android:text="@string/button_read"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:id="@+id/cl_button_leggi" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/MagistChiesa">
+				<LinearLayout android:id="@+id/LinearLayout06"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+					<TextView style="@style/cl_title_style" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Magistero della Chiesa - I Documenti"
+						android:id="@+id/cl_titolo" ></TextView>
+				</LinearLayout>
+				<LinearLayout android:id="@+id/LinearLayout04"
+					android:gravity="center" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:drawableTop="@drawable/ic_menu_download"
+						android:text="@string/button_download" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_scarica" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_refresh"
+						android:text="@string/button_upgdare" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_aggiorna" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_read" android:text="@string/button_read"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:id="@+id/cl_button_leggi" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Preghiere">
+				<LinearLayout android:id="@+id/LinearLayout03"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+					<TextView style="@style/cl_title_style" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Preghiere"
+						android:id="@+id/cl_titolo" ></TextView>
+				</LinearLayout>
+				<LinearLayout android:id="@+id/LinearLayout01"
+					android:gravity="center" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:drawableTop="@drawable/ic_menu_download"
+						android:text="@string/button_download" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_scarica" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_refresh"
+						android:text="@string/button_upgdare" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_aggiorna" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_read" android:text="@string/button_read"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:id="@+id/cl_button_leggi" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical" android:id="@+id/MissaleVO">
+				<LinearLayout android:id="@+id/linearLayout1"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+					<TextView style="@style/cl_title_style" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Missale Romanum"
+						android:id="@+id/cl_titolo" ></TextView>
+				</LinearLayout>
+				<LinearLayout android:id="@+id/linearLayout2"
+					android:gravity="center" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:drawableTop="@drawable/ic_menu_download"
+						android:text="@string/button_download" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_scarica" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_refresh"
+						android:text="@string/button_upgdare" android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:id="@+id/cl_button_aggiorna" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+					<Button android:drawableTop="@drawable/ic_menu_read" android:text="@string/button_read"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:id="@+id/cl_button_leggi" android:focusable="true" android:enabled="false" android:clickable="true"></Button>
+				</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>
