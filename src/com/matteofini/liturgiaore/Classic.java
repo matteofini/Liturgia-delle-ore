@@ -92,7 +92,7 @@ public class Classic extends LiturgiaOreAbstr{
 			LinearLayout ll_BibbiaCEI = (LinearLayout) container.findViewById(R.id.BibbiaCEI); hm_moduli.put("BibbiaCEI", ll_BibbiaCEI);
 			LinearLayout ll_MagistChiesa = (LinearLayout) container.findViewById(R.id.MagistChiesa); hm_moduli.put("MagistChiesa", ll_MagistChiesa);
 			LinearLayout ll_Preghiere = (LinearLayout) container.findViewById(R.id.Preghiere); hm_moduli.put("Preghiere", ll_Preghiere);
-			LinearLayout ll_MissaleVO = (LinearLayout) container.findViewById(R.id.MissaleVO); hm_moduli.put("MissaleVO", ll_MissaleVO);
+			LinearLayout ll_MissaleFE = (LinearLayout) container.findViewById(R.id.MissaleVO); hm_moduli.put("MissaleFE", ll_MissaleFE);
 
 			File downloadDir = new File(filepath);
 			for(final String mName : MODULES){
@@ -158,7 +158,6 @@ public class Classic extends LiturgiaOreAbstr{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		unregisterReceiver(mExternalStorageReceiver);
 	}
 
 	protected File moduleExists(String mName) {
@@ -172,23 +171,31 @@ public class Classic extends LiturgiaOreAbstr{
 	}
 	
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.getItem(0).setTitle("vista rapida");
-		menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+	public boolean onCreateOptionsMenu(Menu menu) {
+		 super.onCreateOptionsMenu(menu);
+		 menu.getItem(0).setTitle("vista rapida");
+		 menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				startActivity(new Intent(Classic.this, LiturgiaOre.class));
 				finish();
 				return true;
 			}
-		});
-		menu.getItem(2).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+		 });
+		 menu.getItem(2).setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				showDialog(DIALOG_CODE.HELP_CL);
 				return true;
 			}
-		});
+		 });
+		 menu.getItem(3).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					showDialog(DIALOG_CODE.DISCLAIMER);
+					return true;
+				}
+			});
+		return true;
 	}
 }

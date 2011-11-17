@@ -20,6 +20,7 @@
 package com.matteofini.liturgiaore;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -39,22 +40,38 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.text.style.StyleSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.widget.SlidingDrawer;
+
+
+class FilterDirectory implements FilenameFilter {
+	private String pattern;
+	public FilterDirectory(String pattern) {
+		this.pattern = pattern;
+	}
+
+	@Override
+	public boolean accept(File dir, String filename) {
+		if (dir.isDirectory() && filename.contains(pattern) && !filename.endsWith("zip"))
+			return true;
+		else return false;
+	}
+}
 
 public abstract class LiturgiaOreAbstr extends Activity {
-	protected DownloadThread _T_DOWNLOAD;
-	protected UnzipThread _T_UNZIP;
-	// private static final String WEB_URL =
-	// "http://www.maranatha.it/Dwl-Edition/";
-	protected static final String WEB_URL = "http://birillo.dyndns.org/Maranatha/";
+	private static final String WEB_URL = "http://www.maranatha.it/Dwl-Edition/";
+	//protected static final String WEB_URL = "http://birillo.dyndns.org/Maranatha/";
 
-	protected static String[] MODULES = new String[] { "02-Liturgia",
-			"03-MessaLiturOre", "03-Salterio4sett", "03-Breviarium",
-			"04-BibbiaCEI-74", "05-MagistChiesa", "06-Preghiere",
-			"07-MissaleVO" };
+	protected static String[] MODULES = new String[] { "Liturgia",
+			"MessaLiturOre", "Salterio4sett", "Breviarium",
+			"BibbiaCEI", "MagistChiesa", "Preghiere",
+			"MissaleFE" };
 	protected static final int START_DOWNLOAD_THREAD = 1000;
 	protected static final int START_UNZIP_THREAD = 2000;
 
@@ -92,7 +109,7 @@ public abstract class LiturgiaOreAbstr extends Activity {
 			public void onReceive(Context context, Intent intent) {	
 				if(intent.getAction().equals(ACTION_SHOWDIALOG)){
 					if(intent.getExtras().getInt("dialog")==DIALOG_CODE.UNZIP){
-						dismissDialog(DIALOG_CODE.UNZIP);
+						dismissDialog(DIALOG_CODE.UNZIP);	//TODO: errore
 						startActivity(new Intent(getApplicationContext(), LiturgiaOre.class));
 						finish();
 					}
@@ -158,8 +175,8 @@ public abstract class LiturgiaOreAbstr extends Activity {
 			url = WEB_URL + "05-MagistChiesa.zip";
 		else if (name.contains("Preghiere"))
 			url = WEB_URL + "06-Preghiere.zip";
-		else if (name.contains("MissaleVO"))
-			url = WEB_URL + "07-MissaleVO.zip";
+		else if (name.contains("MissaleFE"))
+			url = WEB_URL + "07-MissaleFE.zip";
 		else
 			url = "http://www.maranatha.it";
 		return url;
@@ -183,16 +200,13 @@ public abstract class LiturgiaOreAbstr extends Activity {
 		String url = getEntryUrl(mName);
 		File mRrootdir;
 		if ((mRrootdir = moduleExists(mName)) != null) {
-			if (checkDate(mName, mRrootdir)) {
-				return mRrootdir.getAbsolutePath();
-			} else {
-				return mRrootdir.getAbsolutePath();
-			}
+			return mRrootdir.getAbsolutePath();
 		} else {
 			if (checkConnection()) {
 				if (checkWritePermission()) {
 					String path = getSharedPreferenceValue("filepath",this);
 					download(mName, url, path);
+				
 				} else
 					showDialog(DIALOG_CODE.ERROR_SD_ONLY_READ);
 			} else
@@ -209,8 +223,8 @@ public abstract class LiturgiaOreAbstr extends Activity {
 		intent.putExtra("name", mName);
 		intent.putExtra("url", url);
 		intent.putExtra("path", path);
-		startService(intent);
 		showDialog(DIALOG_CODE.DOWNLOAD);
+		startService(intent);
 		//download_nothread(mName, url, path);
 	}
 
@@ -382,6 +396,7 @@ public abstract class LiturgiaOreAbstr extends Activity {
 			d.setMessage("Premi SCARICA per scaricare l'archivio scelto sulla memoria esterna del tuo smartphone.\n"
 							+ "\nPremi AGGIORNA per scaricare ed aggiornare i dati dell'archivio scelto (per esempio con la liturgia delle ore più recente).\n"
 							+ "\nPremi LEGGI per aprire e leggere l'archivio scelto.\n"
+							+ "\n--ATTENZIONE--: l'aggiornamento non garantisce che il contenuto sia più recente: sarà tale solo quando è disponibile una nuova versione dei file (per es. la liturgia delle ore delle settimane a venire), altrimenti i file saranno sovrascritti con la medesima versione (vedi disclaimer).\n"
 							+ "\nPremi il tasto MENU del tuo smartphone per modificare la cartella di destinazione del salvataggio degli archivi.");
 			d.setButton(DialogInterface.BUTTON_POSITIVE, "Indietro",new DialogInterface.OnClickListener() {
 				@Override
@@ -394,8 +409,10 @@ public abstract class LiturgiaOreAbstr extends Activity {
 			AlertDialog d = adb.create();
 			d.setTitle("Aiuto");
 			d.setIcon(getResources().getDrawable(R.drawable.ic_menu_info));
-			d.setMessage("Premi sul pulsante colorato dell'argomento che vuoi leggere; se il file che contiene quell'argomento non è presente sulla memoria, verrà scaricato automaticamente e sarà aperto per la lettura.\n\n" +
-					"Quando sarà disponibile un aggiornamento per uno degli argomenti ti sarà notificato nel momento in cui ci cliccherai sopra per leggerlo, potrai accettare o rifiutare di aggiornare il file che contiene l'argomento scelto.");
+			d.setMessage("Per LEGGERE un archivio (liturgia, messale, etc) CLICCA su uno dei pulsanti colorati; se il file che contiene quell'archivio non è presente sulla memoria, verrà automaticamente scaricato e scompattato e sarà aperto per la lettura.\n\n" +
+					"Per AGGIORNARE i file dei vari archivi TIENI PREMUTO A LUNGO su uno dei pulsanti colorati; l'aggiornamento scaricherà nuovamente l'archivio e sovrascriverà tutti i file precedenti.\n\n" +
+					"--ATTENZIONE--: l'aggiornamento non garantisce che il contenuto sia più recente: sarà tale solo quando è disponibile una nuova versione dei file (per es. la liturgia delle ore delle settimane a venire), altrimenti i file saranno sovrascritti con la medesima versione (vedi disclaimer).\n\n"+ 
+					"Premi il tasto MENU del tuo smartphone per modificare la cartella di destinazione del salvataggio degli archivi.");
 			d.setButton(DialogInterface.BUTTON_POSITIVE, "Indietro",new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -433,6 +450,17 @@ public abstract class LiturgiaOreAbstr extends Activity {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dismissDialog(DIALOG_CODE.CONNECTION_TIMEOUT);
+				}
+			});
+			return d;
+		} else if (id == DIALOG_CODE.DISCLAIMER) {
+			AlertDialog d = adb.create();
+			d.setTitle("Disclaimer");
+			d.setView(getLayoutInflater().inflate(R.layout.disclaimer, null));
+			d.setButton(DialogInterface.BUTTON_POSITIVE, "Indietro",new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dismissDialog(DIALOG_CODE.DISCLAIMER);
 				}
 			});
 			return d;

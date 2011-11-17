@@ -19,57 +19,23 @@
 package com.matteofini.liturgiaore;
 
 import java.io.File;
-import java.io.FilenameFilter;
 
-import com.matteofini.liturgiaore.LiturgiaOreAbstr.DIALOG_CODE;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-
-class FilterDirectory implements FilenameFilter {
-	private String pattern;
-	public FilterDirectory(String pattern) {
-		this.pattern = pattern;
-	}
-
-	@Override
-	public boolean accept(File dir, String filename) {
-		if (dir.isDirectory() && filename.contains(pattern) && !filename.endsWith("zip"))
-			return true;
-		else return false;
-	}
-}
-
-class UnzipThread extends Thread implements Runnable {
-	private Handler h;
-	public UnzipThread(Handler h, Runnable runnable) {
-		super(runnable);
-		this.h = h;
-	}
-}
-
-class DownloadThread extends Thread implements Runnable {
-	private Handler h;
-	public DownloadThread(Handler h, Runnable runnable) {
-		super(runnable);
-		this.h = h;
-	}
-}
 
 public class LiturgiaOre extends LiturgiaOreAbstr{
 	private String filepath; 
@@ -85,11 +51,76 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 		
 	}
 	
+	OnLongClickListener buttonLongClickListener(final String modulo, final String home){
+		return new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				AlertDialog.Builder adb = new AlertDialog.Builder(LiturgiaOre.this);
+				final AlertDialog d = adb.create();
+				d.setTitle("Aggiorna");
+				d.setMessage("Vuoi aggiornare i file di questo archivio se sono disponibili? Verrà effettuato nuovamente il download dell'archivio ed i file precedenti verranno sovrascritti.\n\n"
+						+"ATTENZIONE: l'aggiornamento non garantisce che il contenuto sia più recente: sarà tale solo quando è disponibile una nuova versione dei file (per es. la liturgia delle ore delle settimane a venire), altrimenti i file saranno sovrascritti con la medesima versione (vedi disclaimer).");
+				d.setButton(DialogInterface.BUTTON1, "Continua", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						d.dismiss();
+						String mName = modulo;
+						String url = getEntryUrl(mName);
+						if (checkConnection()) {
+							if (checkWritePermission()) {
+								String path = getSharedPreferenceValue("filepath",LiturgiaOre.this);
+								download(mName, url, path);
+								
+							} else
+								showDialog(DIALOG_CODE.ERROR_SD_ONLY_READ);
+						} else
+							showDialog(DIALOG_CODE.ERROR_CONNECTION);
+					}
+				});
+				d.setButton(DialogInterface.BUTTON2, "Cancella", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						d.dismiss();
+					}
+				});
+				d.show();
+				return true;
+			}
+		};
+	}
+	
+	OnClickListener buttonClickListener(final String modulo, final String home){
+		return new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Animation anim = AnimationUtils.loadAnimation(LiturgiaOre.this, R.anim.anim_button);
+				anim.reset();
+				
+				Animation.AnimationListener anim_listener = new Animation.AnimationListener() {
+					@Override
+					public void onAnimationStart(Animation animation) {}
+					@Override
+					public void onAnimationRepeat(Animation animation) {}
+					@Override
+					public void onAnimationEnd(Animation animation) {
+						String rootdir;
+						if((rootdir = open(modulo))!=null)
+							read(rootdir+home);
+					}
+				};
+				anim.setAnimationListener(anim_listener);
+				View wp = (View) v.getParent();
+				wp.startAnimation(anim);
+			}
+		};
+	}
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);		
+		//setContentView(R.layout.main);		
+		View mainview = getLayoutInflater().inflate(R.layout.main, null);
 		
 		String SDstate = Environment.getExternalStorageState();
 		if (Environment.MEDIA_MOUNTED.equals(SDstate)) {
@@ -110,109 +141,33 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 			if(!filepath.startsWith("/sdcard"))
 				showDialog(DIALOG_CODE.ERROR_BAD_PATH);
 			
-			View mainview = getWindow().getDecorView();
 			LinearLayout container = (LinearLayout) mainview.findViewById(R.id.ListContainer);
 			
-			container.findViewById(R.id.button_liturgiaore).setOnClickListener(new OnClickListener() {
+			container.findViewById(R.id.button_liturgiaore).setOnLongClickListener(new OnLongClickListener() {
 				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("MessaLiturOre"))!=null)
-						read(rootdir+"/00-ENTRA.htm");
-				}
-			});
-				
-			container.findViewById(R.id.button_rosario).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("Preghiere"))!=null)
-						read(rootdir+"/PDArosarium/RVM.htm");
+				public boolean onLongClick(View v) {
+					registerForContextMenu(v);
+					return true;
 				}
 			});
 			
-			container.findViewById(R.id.button_4settSalterio).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("Salterio4sett"))!=null)
-						read(rootdir+"/00-ENTRA.htm");
-				}
-			});
+			container.findViewById(R.id.button_liturgiaore).setOnLongClickListener(buttonLongClickListener("MessaLiturOre", "/00-ENTRA.htm"));
+			container.findViewById(R.id.button_rosario).setOnLongClickListener(buttonLongClickListener("Preghiere", "/PDArosarium/RVM.htm"));
 			
-			container.findViewById(R.id.button_breviariumRomanum).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("Breviarium"))!=null)
-						read(rootdir+"/00-ENTRA.htm");
-				}
-			});
-			
-			container.findViewById(R.id.button_bibbiaCEI).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("BibbiaCEI"))!=null)
-						read(rootdir+"/ENTRA.htm");
-				}
-			});
-			
-			container.findViewById(R.id.button_magisteroChiesa).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("MagistChiesa"))!=null)
-						read(rootdir+"/mobile/m3.htm");
-				}
-			});
-			
-			container.findViewById(R.id.button_preghiere).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("Preghiere"))!=null)
-						read(rootdir+"/mobile/m5.htm");
-				}
-			});
-			
-			container.findViewById(R.id.button_missaleRomanum).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("MissaleVO"))!=null)
-						read(rootdir+"/index.htm");
-				}
-			});
-			
-			container.findViewById(R.id.button_ritodellamessa).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("Liturgia"))!=null)
-						read(rootdir+"/testiPDA/ritomessa/ritomessa.htm");
-				}
-			});
-			
-			container.findViewById(R.id.button_conciliovaticanoII).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("MagistChiesa"))!=null)
-						read(rootdir+"/testiPDA/cvii/indice.htm");
-				}
-			});
-			
-			container.findViewById(R.id.button_catechismo).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					String rootdir;
-					if((rootdir = open("MagistChiesa"))!=null)
-						read(rootdir+"/PDAcompendio/index.htm");
-				}
-			});
+			container.findViewById(R.id.button_liturgiaore).setOnClickListener(buttonClickListener("MessaLiturOre", "/00-ENTRA.htm"));
+			container.findViewById(R.id.button_rosario).setOnClickListener(buttonClickListener("Preghiere", "/PDArosarium/RVM.htm"));
+			container.findViewById(R.id.button_4settSalterio).setOnClickListener(buttonClickListener("Salterio4sett", "/00-ENTRA.htm"));
+			container.findViewById(R.id.button_breviariumRomanum).setOnClickListener(buttonClickListener("Breviarium", "/00-ENTRA.htm"));
+			container.findViewById(R.id.button_bibbiaCEI).setOnClickListener(buttonClickListener("BibbiaCEI","/index.htm"));
+			container.findViewById(R.id.button_magisteroChiesa).setOnClickListener(buttonClickListener("MagistChiesa", "/mobile/m3.htm"));
+			container.findViewById(R.id.button_preghiere).setOnClickListener(buttonClickListener("Preghiere", "/mobile/m5.htm"));
+			container.findViewById(R.id.button_missaleRomanum).setOnClickListener(buttonClickListener("MissaleFE", "/00-ENTRA.htm"));
+			container.findViewById(R.id.button_ritodellamessa).setOnClickListener(buttonClickListener("Liturgia", "/testiPDA/ritomessa/ritomessa.htm"));
+			container.findViewById(R.id.button_conciliovaticanoII).setOnClickListener(buttonClickListener("MagistChiesa", "/testiPDA/cvii/indice.htm"));
+			container.findViewById(R.id.button_catechismo).setOnClickListener(buttonClickListener("MagistChiesa", "/PDAcompendio/index.htm"));
 		}
 		else showDialog(DIALOG_CODE.ERROR_SD_NOT_MOUNTED);
+		setContentView(mainview);
 	}
 	
 	protected File moduleExists(String mName) {
@@ -225,10 +180,10 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 			return match[0];
 	}
 	
+	
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
 		menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
@@ -244,6 +199,14 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 				return true;
 			}
 		});
+		menu.getItem(3).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				showDialog(DIALOG_CODE.DISCLAIMER);
+				return true;
+			}
+		});
+		return true;
 	}
 	
 	@Override

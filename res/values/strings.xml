@@ -7,4 +7,11 @@
 	<string name="button_download">Scarica</string>
 	<string name="button_read">Leggi</string>
 	<string name="button_upgdare">Aggiorna</string>
+	<string name="disclaimer">Liturgia delle Ore permette di fruire in modo più veloce dei contenuti resi disponibili dal sito <a href="http://www.maranatha.it">www.maranatha.it</a>, 
+	su dispositivi Android: non crea i contenuti e non li modifica in alcun modo ma li fornisce all\'utente nella loro forma originale. Questa applicazione permette di compiere in modo centralizzato le azioni di download, unzip, e lettura dei file zip/html pubblicati dal sito sopra citato.\n\n
+	La paternità dei contenuti è da affidarsi unicamente ai gestori del sito indicato, con cui l\'autore di questa applicazione non ha nessun legame.\n\n
+	Per malfunzionamenti, consigli o informazioni scrivere a <b>mf.calimero@gmail.com</b>\n\n
+	Il codice sorgente è disponibile su <a href="https://github.com/matteofini/Liturgia-delle-ore">https://github.com/matteofini/Liturgia-delle-ore</a>\n\n
+	Liturgia delle Ore è un programma Open Source distribuito sotto licenza GPL, è gratuito, e lo sarà sempre.\n\n
+	</string>
 </resources>

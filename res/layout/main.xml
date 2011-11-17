@@ -16,8 +16,7 @@
 				android:layout_width="fill_parent">
 				<Button android:layout_height="wrap_content" style="@style/style_text"
 					android:text="Liturgia delle Ore" android:layout_width="fill_parent"
-					android:clickable="true" android:background="@drawable/selector"
-					android:id="@+id/button_liturgiaore"></Button>
+					android:clickable="true" android:id="@+id/button_liturgiaore" android:background="@drawable/selector"></Button>
 			</LinearLayout>
 			<LinearLayout android:orientation="vertical"
 				android:layout_width="fill_parent" android:background="@drawable/selector_border"
@@ -28,6 +27,9 @@
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:text="Rosario della B.V Maria"></Button>
 			</LinearLayout>
+			<LinearLayout android:layout_height="wrap_content" android:background="@drawable/selector_border" android:layout_width="fill_parent" android:id="@+id/linearLayout1" style="@style/style_row" android:orientation="vertical">
+				<Button android:layout_height="wrap_content" style="@style/style_text" android:id="@+id/button_breviariumRomanum" android:layout_width="fill_parent" android:clickable="true" android:background="@drawable/selector_brown" android:text="Breviarium Romanum"></Button>
+			</LinearLayout>
 			<LinearLayout android:id="@+id/LinearLayout01"
 				android:layout_height="wrap_content" android:background="@drawable/selector_border"
 				android:orientation="vertical" style="@style/style_row"
@@ -36,15 +38,6 @@
 					android:layout_height="wrap_content" style="@style/style_text"
 					android:layout_width="fill_parent" android:clickable="true"
 					android:id="@+id/button_4settSalterio" android:background="@drawable/selector_green"></Button>
-			</LinearLayout>
-			<LinearLayout android:id="@+id/linearLayout1"
-				android:layout_height="wrap_content" android:background="@drawable/selector_border"
-				android:orientation="vertical" style="@style/style_row"
-				android:layout_width="fill_parent">
-				<Button android:text="Breviarium Romanum"
-					android:layout_height="wrap_content" style="@style/style_text"
-					android:layout_width="fill_parent" android:clickable="true"
-					android:id="@+id/button_breviariumRomanum" android:background="@drawable/selector_brown"></Button>
 			</LinearLayout>
 			<LinearLayout android:id="@+id/LinearLayout07"
 				android:layout_height="wrap_content" android:background="@drawable/selector_border"
