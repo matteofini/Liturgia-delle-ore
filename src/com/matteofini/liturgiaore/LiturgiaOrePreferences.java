@@ -20,7 +20,7 @@
 package com.matteofini.liturgiaore;
 
 import java.io.File;
-
+import com.matteofini.liturgiaore.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;

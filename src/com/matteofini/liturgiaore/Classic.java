@@ -21,27 +21,21 @@ package com.matteofini.liturgiaore;
 import java.io.File;
 import java.util.HashMap;
 
-import com.matteofini.liturgiaore.LiturgiaOreAbstr.DIALOG_CODE;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ViewFlipper;
 
 public class Classic extends LiturgiaOreAbstr{
 	private String filepath; 
@@ -80,7 +74,8 @@ public class Classic extends LiturgiaOreAbstr{
 			
 			View mainview = getWindow().getDecorView();
 			LinearLayout container = (LinearLayout) mainview.findViewById(R.id.ListContainer);
-			
+			ViewFlipper flipper = (ViewFlipper) mainview.findViewById(R.id.ViewFlipper2);
+			flipper.startFlipping();
 			/*
 			"02-Liturgia", "03-MessaLiturOre", "03-Salterio4sett", "03-Breviarium", "04-BibbiaCEI-74", "05-MagistChiesa", "06-Preghiere","07-MissaleVO"
 			*/
@@ -124,14 +119,25 @@ public class Classic extends LiturgiaOreAbstr{
 					b_upgr.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							if(checkConnection()){
-								if(checkWritePermission()){
-									String path = getSharedPreferenceValue("filepath", Classic.this);
-									download(mName, url, path);
+							AlertDialog.Builder adb = new AlertDialog.Builder(Classic.this);
+							final AlertDialog d = adb.create();
+							d.setIcon(R.drawable.ic_menu_info);
+							d.setTitle("Aggiorna");
+							d.setMessage("Verrà effettuato nuovamente il download dell'archivio ed i file precedenti verranno sovrascritti.\n\n"+"ATTENZIONE: l'aggiornamento non garantisce che il contenuto sarà più recente: sarà tale solo quando è disponibile una nuova versione dei file, altrimenti i file saranno sovrascritti con la medesima versione.");
+							d.setButton(DialogInterface.BUTTON1, "Continua", new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									d.dismiss();
+									open(mName, true);
 								}
-								else showDialog(DIALOG_CODE.ERROR_SD_ONLY_READ);
-							}
-							else showDialog(DIALOG_CODE.ERROR_CONNECTION);
+							});
+							d.setButton(DialogInterface.BUTTON2, "Cancella", new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									d.dismiss();
+								}
+							});
+							d.show();
 						}
 					});
 					b_read.setOnClickListener(new OnClickListener() {

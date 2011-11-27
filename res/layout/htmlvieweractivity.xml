@@ -3,7 +3,23 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<WebView android:id="@+id/webView1" android:layout_alignParentTop="true"
-	android:layout_alignParentLeft="true" android:layout_above="@+id/RelativeLayout2" android:layout_height="fill_parent" android:layout_width="fill_parent"></WebView>
+
+	<view
+	    class="com.matteofini.liturgiaore.myWebView"
+	    android:id="@+id/myWebView1"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_above="@+id/button1"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true" >
+	</view>
+
+	<Button
+	    android:id="@+id/scrollbutton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentLeft="true"
+	    android:text="Button" />
 	
 </RelativeLayout>

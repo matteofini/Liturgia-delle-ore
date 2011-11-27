@@ -12,99 +12,99 @@
 			android:layout_width="fill_parent">
 			<LinearLayout android:id="@+id/LinearLayout04"
 				android:layout_height="wrap_content" android:background="@drawable/selector_border"
-				android:orientation="vertical" style="@style/style_row"
+				android:orientation="vertical" style="@style/style_row_xl_port"
 				android:layout_width="fill_parent">
-				<Button android:layout_height="wrap_content" style="@style/style_text"
+				<Button style="@style/style_text_xl"
 					android:text="Liturgia delle Ore" android:layout_width="fill_parent"
 					android:clickable="true" android:id="@+id/button_liturgiaore"
-					android:background="@drawable/selector"></Button>
+					android:background="@drawable/selector" android:layout_height="wrap_content"></Button>
 			</LinearLayout>
 			<LinearLayout android:orientation="vertical"
 				android:layout_width="fill_parent" android:background="@drawable/selector_border"
-				android:layout_height="wrap_content" style="@style/style_row"
+				android:layout_height="wrap_content" style="@style/style_row_xl_port"
 				android:id="@+id/LinearLayout05">
-				<Button style="@style/style_text" android:clickable="true"
+				<Button style="@style/style_text_xl" android:clickable="true"
 					android:background="@drawable/selector_blue" android:id="@+id/button_rosario"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:text="Rosario della B.V Maria"></Button>
 			</LinearLayout>
 			<LinearLayout android:layout_height="wrap_content"
 				android:background="@drawable/selector_border" android:layout_width="fill_parent"
-				android:id="@+id/linearLayout1" style="@style/style_row"
+				android:id="@+id/linearLayout1" style="@style/style_row_xl_port"
 				android:orientation="vertical">
-				<Button android:layout_height="wrap_content" style="@style/style_text"
+				<Button android:layout_height="wrap_content" style="@style/style_text_xl"
 					android:id="@+id/button_breviariumRomanum" android:layout_width="fill_parent"
 					android:clickable="true" android:background="@drawable/selector_brown"
 					android:text="Breviarium Romanum"></Button>
 			</LinearLayout>
 			<LinearLayout android:id="@+id/LinearLayout01"
 				android:layout_height="wrap_content" android:background="@drawable/selector_border"
-				android:orientation="vertical" style="@style/style_row"
+				android:orientation="vertical" style="@style/style_row_xl_port"
 				android:layout_width="fill_parent">
 				<Button android:text="4 sett. Salterio"
-					android:layout_height="wrap_content" style="@style/style_text"
+					android:layout_height="wrap_content" style="@style/style_text_xl"
 					android:layout_width="fill_parent" android:clickable="true"
 					android:id="@+id/button_4settSalterio" android:background="@drawable/selector_green"></Button>
 			</LinearLayout>
 			<LinearLayout android:id="@+id/LinearLayout07"
 				android:layout_height="wrap_content" android:background="@drawable/selector_border"
-				android:orientation="vertical" style="@style/style_row"
+				android:orientation="vertical" style="@style/style_row_xl_port"
 				android:layout_width="fill_parent">
 				<Button android:text="La Sacra Bibbia" android:layout_height="wrap_content"
-					style="@style/style_text" android:layout_width="fill_parent"
+					style="@style/style_text_xl" android:layout_width="fill_parent"
 					android:clickable="true" android:id="@+id/button_bibbiaCEI"
 					android:background="@drawable/selector_gold"></Button>
 			</LinearLayout>
 			<LinearLayout android:id="@+id/LinearLayout08"
 				android:layout_height="wrap_content" android:background="@drawable/selector_border"
-				android:orientation="vertical" style="@style/style_row"
+				android:orientation="vertical" style="@style/style_row_xl_port"
 				android:layout_width="fill_parent">
 				<Button android:layout_height="wrap_content"
 					android:layout_width="fill_parent" android:clickable="true"
-					android:text="Magistero della Chiesa" style="@style/style_text"
+					android:text="Magistero della Chiesa" style="@style/style_text_xl"
 					android:id="@+id/button_magisteroChiesa" android:background="@drawable/selector"></Button>
 			</LinearLayout>
 			<LinearLayout android:id="@+id/LinearLayout06"
 				android:layout_height="wrap_content" android:background="@drawable/selector_border"
-				android:orientation="vertical" style="@style/style_row"
+				android:orientation="vertical" style="@style/style_row_xl_port"
 				android:layout_width="fill_parent">
 				<Button android:text="Preghiere" android:layout_height="wrap_content"
-					style="@style/style_text" android:layout_width="fill_parent"
+					style="@style/style_text_xl" android:layout_width="fill_parent"
 					android:clickable="true" android:id="@+id/button_preghiere"
 					android:background="@drawable/selector_green"></Button>
 			</LinearLayout>
 			<LinearLayout android:id="@+id/LinearLayout03"
 				android:layout_height="wrap_content" android:background="@drawable/selector_border"
-				android:orientation="vertical" style="@style/style_row"
+				android:orientation="vertical" style="@style/style_row_xl_port"
 				android:layout_width="fill_parent">
-				<Button android:layout_height="wrap_content" style="@style/style_text"
+				<Button android:layout_height="wrap_content" style="@style/style_text_xl"
 					android:text="Missale Romanum" android:layout_width="fill_parent"
 					android:clickable="true" android:background="@drawable/selector"
 					android:id="@+id/button_missaleRomanum"></Button>
 			</LinearLayout>
-			<LinearLayout style="@style/style_row"
+			<LinearLayout style="@style/style_row_xl_port"
 				android:layout_height="wrap_content" android:id="@+id/LinearLayout02"
 				android:orientation="vertical" android:background="@drawable/selector_border"
 				android:layout_width="fill_parent">
-				<Button style="@style/style_text" android:layout_height="wrap_content"
+				<Button style="@style/style_text_xl" android:layout_height="wrap_content"
 					android:text="Rito della Messa" android:layout_width="fill_parent"
 					android:clickable="true" android:id="@+id/button_ritodellamessa"
 					android:background="@drawable/selector_purple"></Button>
 			</LinearLayout>
-			<LinearLayout style="@style/style_row"
+			<LinearLayout style="@style/style_row_xl_port"
 				android:layout_height="wrap_content" android:id="@+id/LinearLayout09"
 				android:orientation="vertical" android:background="@drawable/selector_border"
 				android:layout_width="fill_parent">
-				<Button style="@style/style_text" android:layout_height="wrap_content"
+				<Button style="@style/style_text_xl" android:layout_height="wrap_content"
 					android:text="Concilio Vaticano II" android:layout_width="fill_parent"
 					android:clickable="true" android:background="@drawable/selector"
 					android:id="@+id/button_conciliovaticanoII"></Button>
 			</LinearLayout>
-			<LinearLayout style="@style/style_row"
+			<LinearLayout style="@style/style_row_xl_port"
 				android:layout_height="wrap_content" android:id="@+id/LinearLayout10"
 				android:orientation="vertical" android:background="@drawable/selector_border"
 				android:layout_width="fill_parent">
-				<Button style="@style/style_text" android:layout_height="wrap_content"
+				<Button style="@style/style_text_xl" android:layout_height="wrap_content"
 					android:text="Catechismo della Chiesa" android:layout_width="fill_parent"
 					android:clickable="true" android:id="@+id/button_catechismo"
 					android:background="@drawable/selector_orange"></Button>

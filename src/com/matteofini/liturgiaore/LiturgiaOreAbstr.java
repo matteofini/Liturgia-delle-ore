@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -40,14 +39,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.text.Html;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.text.style.StyleSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
-import android.widget.SlidingDrawer;
 
 
 class FilterDirectory implements FilenameFilter {
@@ -195,11 +190,11 @@ public abstract class LiturgiaOreAbstr extends Activity {
 	 * "http://www.maranatha.it"; return str; }
 	 */
 
-	protected String open(String name) {
+	protected String open(String name, boolean forcedownload) {
 		String mName = name;
 		String url = getEntryUrl(mName);
 		File mRrootdir;
-		if ((mRrootdir = moduleExists(mName)) != null) {
+		if ((mRrootdir = moduleExists(mName)) != null && !forcedownload) {
 			return mRrootdir.getAbsolutePath();
 		} else {
 			if (checkConnection()) {
@@ -379,14 +374,14 @@ public abstract class LiturgiaOreAbstr extends Activity {
 			ProgressDialog d = new ProgressDialog(this);
 			d.setCancelable(false);
 			d.setTitle("Download in corso");
-			d.setMessage("di " + getEntryUrl(whatimdownloading)+ " sarà salvato in " + path);
+			d.setMessage("il file sarà salvato in " + path);
 			d.setSecondaryProgress(0);
 			return d;
 		} else if (id == DIALOG_CODE.UNZIP) {
 			ProgressDialog d = new ProgressDialog(this);
 			d.setCancelable(false);
 			d.setTitle("Estrazione dei file in corso");
-			d.setMessage(whatimunzipping + " sarà estratto in " + path+ "\nPossono occorrere un paio di minuti");
+			d.setMessage("il file sarà estratto in " + path+ "\nPossono occorrere un paio di minuti");
 			d.setSecondaryProgress(0);
 			return d;
 		} else if (id == DIALOG_CODE.HELP_CL) {
@@ -396,7 +391,7 @@ public abstract class LiturgiaOreAbstr extends Activity {
 			d.setMessage("Premi SCARICA per scaricare l'archivio scelto sulla memoria esterna del tuo smartphone.\n"
 							+ "\nPremi AGGIORNA per scaricare ed aggiornare i dati dell'archivio scelto (per esempio con la liturgia delle ore più recente).\n"
 							+ "\nPremi LEGGI per aprire e leggere l'archivio scelto.\n"
-							+ "\n--ATTENZIONE--: l'aggiornamento non garantisce che il contenuto sia più recente: sarà tale solo quando è disponibile una nuova versione dei file (per es. la liturgia delle ore delle settimane a venire), altrimenti i file saranno sovrascritti con la medesima versione (vedi disclaimer).\n"
+							+ "\nATTENZIONE: l'aggiornamento non garantisce che il contenuto sarà più recente: sarà tale solo quando è disponibile una nuova versione dei file, altrimenti i file saranno sovrascritti con la medesima versione.(vedi disclaimer).\n"
 							+ "\nPremi il tasto MENU del tuo smartphone per modificare la cartella di destinazione del salvataggio degli archivi.");
 			d.setButton(DialogInterface.BUTTON_POSITIVE, "Indietro",new DialogInterface.OnClickListener() {
 				@Override
@@ -411,7 +406,7 @@ public abstract class LiturgiaOreAbstr extends Activity {
 			d.setIcon(getResources().getDrawable(R.drawable.ic_menu_info));
 			d.setMessage("Per LEGGERE un archivio (liturgia, messale, etc) CLICCA su uno dei pulsanti colorati; se il file che contiene quell'archivio non è presente sulla memoria, verrà automaticamente scaricato e scompattato e sarà aperto per la lettura.\n\n" +
 					"Per AGGIORNARE i file dei vari archivi TIENI PREMUTO A LUNGO su uno dei pulsanti colorati; l'aggiornamento scaricherà nuovamente l'archivio e sovrascriverà tutti i file precedenti.\n\n" +
-					"--ATTENZIONE--: l'aggiornamento non garantisce che il contenuto sia più recente: sarà tale solo quando è disponibile una nuova versione dei file (per es. la liturgia delle ore delle settimane a venire), altrimenti i file saranno sovrascritti con la medesima versione (vedi disclaimer).\n\n"+ 
+					"ATTENZIONE: l'aggiornamento non garantisce che il contenuto sarà più recente: sarà tale solo quando è disponibile una nuova versione dei file, altrimenti i file saranno sovrascritti con la medesima versione.(vedi disclaimer).\n\n"+ 
 					"Premi il tasto MENU del tuo smartphone per modificare la cartella di destinazione del salvataggio degli archivi.");
 			d.setButton(DialogInterface.BUTTON_POSITIVE, "Indietro",new DialogInterface.OnClickListener() {
 				@Override
@@ -456,6 +451,7 @@ public abstract class LiturgiaOreAbstr extends Activity {
 		} else if (id == DIALOG_CODE.DISCLAIMER) {
 			AlertDialog d = adb.create();
 			d.setTitle("Disclaimer");
+			d.setIcon(getResources().getDrawable(R.drawable.ic_menu_info));
 			d.setView(getLayoutInflater().inflate(R.layout.disclaimer, null));
 			d.setButton(DialogInterface.BUTTON_POSITIVE, "Indietro",new DialogInterface.OnClickListener() {
 				@Override

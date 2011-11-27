@@ -18,12 +18,27 @@
  */
 package com.matteofini.liturgiaore;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -33,7 +48,8 @@ import android.widget.RelativeLayout;
 
 public class HTMLViewerActivity extends Activity{
 
-	private WebView wv;
+	private myWebView wv;
+	Thread t_autoscroll = null;
 	//private TextToSpeech mTts;
 	//private ReentrantLock TTSlock;
 
@@ -53,8 +69,7 @@ public class HTMLViewerActivity extends Activity{
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-	}
-	
+	}	
 	
 	public class MyWebClient extends WebViewClient{
 		@Override
@@ -74,11 +89,30 @@ public class HTMLViewerActivity extends Activity{
 			return true;
 		}	
 		
-		/*@Override
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			super.onPageStarted(view, url, favicon);
+			try {
+				InputStream is = getResources().getAssets().open("style.js");
+				StringBuffer buf = new StringBuffer();
+				int c;
+				int n = 0;
+				while ((c = is.read()) > 0) {
+					buf.append((char) c);
+					n++;
+				}
+				//String s = new String(buf);
+				//System.out.println(buf);
+				wv.loadUrl("javascript:(function() {"+buf+"})()");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Override
 		public void onPageFinished(WebView view, String url) {
-			//view.loadUrl("javascript:(document.style.background='#000000';)()");  
-			view.loadUrl("javascript:(function(){loaderScript=document.createElement('SCRIPT');loaderScript.type='text/javascript';loaderScript.src='content://com.ideal.webaccess.localjs/ideal-loader.js';document.getElementsByTagName('head')[0].appendChild(loaderScript);})();");  
-		}*/
+			// view.loadUrl("javascript:(function(){loaderScript=document.createElement('SCRIPT');loaderScript.type='text/javascript';loaderScript.src='content://com.ideal.webaccess.localjs/ideal-loader.js';document.getElementsByTagName('head')[0].appendChild(loaderScript);})();");
+		}
 	}
 	
 	public class MyWebChromeClient extends WebChromeClient{
@@ -98,10 +132,40 @@ public class HTMLViewerActivity extends Activity{
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);		
         getWindow().setFeatureInt( Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
         RelativeLayout v = (RelativeLayout) getLayoutInflater().inflate(R.layout.htmlvieweractivity, null);
-		wv = (WebView) v.findViewById(R.id.webView1);
+        //wv = new WebView(HTMLViewerActivity.this);
+        //v.addView(wv);
+		wv = (myWebView) v.findViewById(R.id.myWebView1);
 		wv.setFocusable(true);
+		v.findViewById(R.id.scrollbutton).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				t_autoscroll = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						while(wv.getScrollY()<wv.getContentHeight()){
+							runOnUiThread(new Runnable() {
+								public void run() {
+									wv.scrollBy(0, 1);
+								}
+							});
+							
+							SystemClock.sleep(50);
+						}
+					}
+				});
+				t_autoscroll.start();
+			}
+		});
+		wv.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(t_autoscroll!=null)
+					h.sendEmptyMessage(800);
+				return false;
+			}
+		});
+		
 		setContentView(v);
-
 /*		mTts = new TextToSpeech(this, this);
 		TTSlock = new ReentrantLock();
 		TTSlock.lock();	*/
@@ -118,5 +182,40 @@ public class HTMLViewerActivity extends Activity{
 			Log.println(Log.INFO, "HTMLViewerActivity", "\t load URI "+uri);
 		wv.loadUrl(uri);
 		wv.getContentDescription();
+	}
+	
+	Handler h = new Handler(new Callback() {
+		@Override
+		public boolean handleMessage(Message msg) {
+			
+			return false;
+		}
+	});
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.webmenu, menu);
+		menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						while(wv.getScrollY()<wv.getContentHeight()){
+							Message m = h.obtainMessage();
+							runOnUiThread(new Runnable() {
+								public void run() {
+									wv.scrollBy(0, 10);
+								}
+							});
+							
+							SystemClock.sleep(100);
+						}
+					}
+				}).start();
+				return true;
+			}
+		});
+		return true;
 	}
 }

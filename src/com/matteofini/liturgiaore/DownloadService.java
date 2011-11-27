@@ -32,12 +32,10 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Vibrator;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.matteofini.liturgiaore.LiturgiaOreAbstr.DIALOG_CODE;
 
@@ -49,7 +47,7 @@ public class DownloadService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		download_nothread(intent.getStringExtra("mName"), intent.getStringExtra("url"), intent.getStringExtra("path"));
+		download_nothread(intent.getStringExtra("name"), intent.getStringExtra("url"), intent.getStringExtra("path"));
 	}
 		
 	@Override
@@ -140,7 +138,7 @@ public class DownloadService extends IntentService {
 			ZipFile zipfile = new ZipFile(newfile);
 			Enumeration<ZipEntry> entries = (Enumeration<ZipEntry>) zipfile.entries();
 
-			Log.println(Log.INFO, "LiturgiaOre", "\t Extracting "+newfile.getName()+" into "+path);
+			Log.println(Log.INFO, "LiturgiaOre", "\t Extracting "+zipfile.getName()+" into "+path);
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) entries.nextElement();
 				BufferedInputStream in = new BufferedInputStream(zipfile.getInputStream(entry), 8192);
@@ -168,7 +166,7 @@ public class DownloadService extends IntentService {
 				}
 				in.close();
 			}
-			Log.println(Log.INFO, "LiturgiaOre", "\t Estrazione di "+newfile.getName()+" completata.");
+			Log.println(Log.INFO, "LiturgiaOre", "\t Estrazione di "+zipfile.getName()+" completata.");
 			newfile.delete();
 			zipfile.close();
 			Intent i = new Intent("com.matteofini.liturgiaore.ACTION_SHOWDIALOG");

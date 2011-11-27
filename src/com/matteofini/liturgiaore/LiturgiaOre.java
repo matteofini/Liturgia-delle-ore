@@ -19,7 +19,7 @@
 package com.matteofini.liturgiaore;
 
 import java.io.File;
-
+import com.matteofini.liturgiaore.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +36,7 @@ import android.view.View.OnLongClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.ViewFlipper;
 
 public class LiturgiaOre extends LiturgiaOreAbstr{
 	private String filepath; 
@@ -57,24 +58,15 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 			public boolean onLongClick(View v) {
 				AlertDialog.Builder adb = new AlertDialog.Builder(LiturgiaOre.this);
 				final AlertDialog d = adb.create();
+				d.setIcon(R.drawable.ic_menu_info);
 				d.setTitle("Aggiorna");
-				d.setMessage("Vuoi aggiornare i file di questo archivio se sono disponibili? Verrà effettuato nuovamente il download dell'archivio ed i file precedenti verranno sovrascritti.\n\n"
-						+"ATTENZIONE: l'aggiornamento non garantisce che il contenuto sia più recente: sarà tale solo quando è disponibile una nuova versione dei file (per es. la liturgia delle ore delle settimane a venire), altrimenti i file saranno sovrascritti con la medesima versione (vedi disclaimer).");
+				d.setMessage("Verrà effettuato nuovamente il download dell'archivio ed i file precedenti verranno sovrascritti.\n\n"
+						+"ATTENZIONE: l'aggiornamento non garantisce che il contenuto sarà più recente: sarà tale solo quando è disponibile una nuova versione dei file, altrimenti i file saranno sovrascritti con la medesima versione.");
 				d.setButton(DialogInterface.BUTTON1, "Continua", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						d.dismiss();
-						String mName = modulo;
-						String url = getEntryUrl(mName);
-						if (checkConnection()) {
-							if (checkWritePermission()) {
-								String path = getSharedPreferenceValue("filepath",LiturgiaOre.this);
-								download(mName, url, path);
-								
-							} else
-								showDialog(DIALOG_CODE.ERROR_SD_ONLY_READ);
-						} else
-							showDialog(DIALOG_CODE.ERROR_CONNECTION);
+						open(modulo, true);
 					}
 				});
 				d.setButton(DialogInterface.BUTTON2, "Cancella", new DialogInterface.OnClickListener() {
@@ -104,7 +96,7 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 					@Override
 					public void onAnimationEnd(Animation animation) {
 						String rootdir;
-						if((rootdir = open(modulo))!=null)
+						if((rootdir = open(modulo, false))!=null)
 							read(rootdir+home);
 					}
 				};
@@ -153,6 +145,15 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 			
 			container.findViewById(R.id.button_liturgiaore).setOnLongClickListener(buttonLongClickListener("MessaLiturOre", "/00-ENTRA.htm"));
 			container.findViewById(R.id.button_rosario).setOnLongClickListener(buttonLongClickListener("Preghiere", "/PDArosarium/RVM.htm"));
+			container.findViewById(R.id.button_4settSalterio).setOnLongClickListener(buttonLongClickListener("Salterio4sett", "/00-ENTRA.htm"));
+			container.findViewById(R.id.button_breviariumRomanum).setOnLongClickListener(buttonLongClickListener("Breviarium", "/00-ENTRA.htm"));
+			container.findViewById(R.id.button_bibbiaCEI).setOnLongClickListener(buttonLongClickListener("BibbiaCEI","/index.htm"));
+			container.findViewById(R.id.button_magisteroChiesa).setOnLongClickListener(buttonLongClickListener("MagistChiesa", "/mobile/m3.htm"));
+			container.findViewById(R.id.button_preghiere).setOnLongClickListener(buttonLongClickListener("Preghiere", "/mobile/m5.htm"));
+			container.findViewById(R.id.button_missaleRomanum).setOnLongClickListener(buttonLongClickListener("MissaleFE", "/00-ENTRA.htm"));
+			container.findViewById(R.id.button_ritodellamessa).setOnLongClickListener(buttonLongClickListener("Liturgia", "/testiPDA/ritomessa/ritomessa.htm"));
+			container.findViewById(R.id.button_conciliovaticanoII).setOnLongClickListener(buttonLongClickListener("MagistChiesa", "/testiPDA/cvii/indice.htm"));
+			container.findViewById(R.id.button_catechismo).setOnLongClickListener(buttonLongClickListener("MagistChiesa", "/PDAcompendio/index.htm"));
 			
 			container.findViewById(R.id.button_liturgiaore).setOnClickListener(buttonClickListener("MessaLiturOre", "/00-ENTRA.htm"));
 			container.findViewById(R.id.button_rosario).setOnClickListener(buttonClickListener("Preghiere", "/PDArosarium/RVM.htm"));
@@ -167,6 +168,8 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 			container.findViewById(R.id.button_catechismo).setOnClickListener(buttonClickListener("MagistChiesa", "/PDAcompendio/index.htm"));
 		}
 		else showDialog(DIALOG_CODE.ERROR_SD_NOT_MOUNTED);
+		ViewFlipper flipper = (ViewFlipper) mainview.findViewById(R.id.ViewFlipper1);
+		flipper.startFlipping();
 		setContentView(mainview);
 	}
 	
