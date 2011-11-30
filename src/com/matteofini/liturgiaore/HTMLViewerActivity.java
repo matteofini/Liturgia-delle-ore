@@ -18,27 +18,44 @@
  */
 package com.matteofini.liturgiaore;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
+import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -49,27 +66,25 @@ import android.widget.RelativeLayout;
 public class HTMLViewerActivity extends Activity{
 
 	private myWebView wv;
-	Thread t_autoscroll = null;
-	//private TextToSpeech mTts;
-	//private ReentrantLock TTSlock;
-
-	/*	public void onInit(int status) {
-    	if(TextToSpeech.SUCCESS==status){
-    		int res = mTts.setLanguage(Locale.ITALY);
-    		if(res==TextToSpeech.LANG_NOT_SUPPORTED || res==TextToSpeech.LANG_MISSING_DATA){
-    			Log.println(Log.ERROR, "Maranatha.OnInit", "TTS Locale Language error. Not supported or missing data.");
-    		}
-    		TTSlock.unlock();	// waiting thread will be able to acquire the lock (and just unlock for the last time) #81 
-    	}
-    	else{
-    		Log.println(Log.ERROR, "Maranatha.OnInit", "TTS status not SUCCESS");
-    	}
-    }	*/	
+	public boolean stopscroll=false;
+	public int step=1;
+	public int interval=100;
 	
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-	}	
+	private Handler h_autoscroll;
+	private Thread t_autoscroll =  new Thread(new Runnable() {
+		@Override
+		public void run() {	
+			Looper.prepare();
+			h_autoscroll = new Handler(new Callback() {
+				@Override
+				public boolean handleMessage(Message msg) {
+					// TODO Auto-generated method stub
+					return false;
+				}
+			});
+			Looper.loop();
+		}
+	}, "thread_autoscroll");
 	
 	public class MyWebClient extends WebViewClient{
 		@Override
@@ -92,6 +107,11 @@ public class HTMLViewerActivity extends Activity{
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			super.onPageStarted(view, url, favicon);
+		}
+		
+		@Override
+		public void onPageFinished(WebView view, String url) {
+			// view.loadUrl("javascript:(function(){loaderScript=document.createElement('SCRIPT');loaderScript.type='text/javascript';loaderScript.src='content://com.ideal.webaccess.localjs/ideal-loader.js';document.getElementsByTagName('head')[0].appendChild(loaderScript);})();");
 			try {
 				InputStream is = getResources().getAssets().open("style.js");
 				StringBuffer buf = new StringBuffer();
@@ -103,15 +123,23 @@ public class HTMLViewerActivity extends Activity{
 				}
 				//String s = new String(buf);
 				//System.out.println(buf);
-				wv.loadUrl("javascript:(function() {"+buf+"})()");
+				DisplayMetrics display = getResources().getDisplayMetrics();
+				wv.loadUrl("javascript:(function(displayWidth) {" +
+						"var all_table = document.getElementsByTagName('table');\n" + 
+						"for(i=0;i<all_table.length;i++){" + 
+						"	all_table[i].style.width='100%';" +
+						"	if(displayWidth>=800){" +
+						"		all_table[i].style.fontSize='xx-large';" +
+						"	}" +
+						"	else if(displayWidth>=600){" +
+						"		all_table[i].style.fontSize='x-large';" +
+						"	}" +
+						"}" +
+						"})("+display.widthPixels+")");
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		@Override
-		public void onPageFinished(WebView view, String url) {
-			// view.loadUrl("javascript:(function(){loaderScript=document.createElement('SCRIPT');loaderScript.type='text/javascript';loaderScript.src='content://com.ideal.webaccess.localjs/ideal-loader.js';document.getElementsByTagName('head')[0].appendChild(loaderScript);})();");
 		}
 	}
 	
@@ -132,44 +160,10 @@ public class HTMLViewerActivity extends Activity{
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);		
         getWindow().setFeatureInt( Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
         RelativeLayout v = (RelativeLayout) getLayoutInflater().inflate(R.layout.htmlvieweractivity, null);
-        //wv = new WebView(HTMLViewerActivity.this);
-        //v.addView(wv);
 		wv = (myWebView) v.findViewById(R.id.myWebView1);
 		wv.setFocusable(true);
-		v.findViewById(R.id.scrollbutton).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				t_autoscroll = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						while(wv.getScrollY()<wv.getContentHeight()){
-							runOnUiThread(new Runnable() {
-								public void run() {
-									wv.scrollBy(0, 1);
-								}
-							});
-							
-							SystemClock.sleep(50);
-						}
-					}
-				});
-				t_autoscroll.start();
-			}
-		});
-		wv.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if(t_autoscroll!=null)
-					h.sendEmptyMessage(800);
-				return false;
-			}
-		});
+		t_autoscroll.start();
 		
-		setContentView(v);
-/*		mTts = new TextToSpeech(this, this);
-		TTSlock = new ReentrantLock();
-		TTSlock.lock();	*/
-
         WebSettings s = wv.getSettings();
 		s.setBuiltInZoomControls(true);
 		s.setSupportMultipleWindows(true);
@@ -182,40 +176,59 @@ public class HTMLViewerActivity extends Activity{
 			Log.println(Log.INFO, "HTMLViewerActivity", "\t load URI "+uri);
 		wv.loadUrl(uri);
 		wv.getContentDescription();
+		setContentView(v);
 	}
-	
-	Handler h = new Handler(new Callback() {
-		@Override
-		public boolean handleMessage(Message msg) {
-			
-			return false;
-		}
-	});
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.webmenu, menu);
-		menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem item) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						while(wv.getScrollY()<wv.getContentHeight()){
-							Message m = h.obtainMessage();
+		return true;
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		super.onMenuItemSelected(featureId, item);
+		if(item.getTitleCondensed().equals("Start")){
+			stopscroll=false;
+			h_autoscroll.post(new Runnable() {
+				@Override
+				public void run() {
+					stopscroll=false;
+					while(wv.getScrollY()<wv.getContentHeight()-wv.computeVerticalScrollExtent()){
+						if(stopscroll)
+							break;
+						else
 							runOnUiThread(new Runnable() {
 								public void run() {
-									wv.scrollBy(0, 10);
+									wv.scrollBy(0, step);
 								}
 							});
-							
-							SystemClock.sleep(100);
-						}
+						SystemClock.sleep(interval);
 					}
-				}).start();
-				return true;
+				}
+			});
+		}
+		else if(item.getTitleCondensed().equals("Stop")){
+			stopscroll=true;
+		}
+		else if(item.getTitleCondensed().equals("Veloce")){
+			if(step==1&&interval==100)
+				interval=50;
+			else
+				step*=2;
+		}
+		else if(item.getTitleCondensed().equals("Lento")){
+			if(step==1&&interval==50)
+				interval=100;
+			else{
+				int c=step/2;
+				if(c<=0) step=1;
+				else step=c;
 			}
-		});
+		}
+		else if(item.getTitleCondensed().equals("Ricarica")){
+			wv.reload();
+		}
 		return true;
 	}
 }

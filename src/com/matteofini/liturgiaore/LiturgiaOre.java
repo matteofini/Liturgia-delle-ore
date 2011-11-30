@@ -19,7 +19,7 @@
 package com.matteofini.liturgiaore;
 
 import java.io.File;
-import com.matteofini.liturgiaore.R;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,13 +29,13 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 
 public class LiturgiaOre extends LiturgiaOreAbstr{
@@ -96,8 +96,16 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 					@Override
 					public void onAnimationEnd(Animation animation) {
 						String rootdir;
-						if((rootdir = open(modulo, false))!=null)
-							read(rootdir+home);
+						if((rootdir = open(modulo, false))!=null){
+							if(new File(rootdir+home).exists())
+								read(rootdir+home);
+							else if(new File(rootdir+"/00-ENTRA.htm").exists())
+								read(rootdir+"/00-ENTRA.htm");
+							else if(new File(rootdir+"/index.htm").exists())
+								read(rootdir+"/index.htm");
+							else
+								read(rootdir+home);
+						}
 					}
 				};
 				anim.setAnimationListener(anim_listener);
@@ -113,7 +121,6 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.main);		
 		View mainview = getLayoutInflater().inflate(R.layout.main, null);
-		
 		String SDstate = Environment.getExternalStorageState();
 		if (Environment.MEDIA_MOUNTED.equals(SDstate)) {
 			mExternalStorageAvailable = mExternalStorageWriteable = true;
@@ -133,7 +140,7 @@ public class LiturgiaOre extends LiturgiaOreAbstr{
 			if(!filepath.startsWith("/sdcard"))
 				showDialog(DIALOG_CODE.ERROR_BAD_PATH);
 			
-			LinearLayout container = (LinearLayout) mainview.findViewById(R.id.ListContainer);
+			RelativeLayout container = (RelativeLayout) mainview.findViewById(R.id.ListContainer);
 			
 			container.findViewById(R.id.button_liturgiaore).setOnLongClickListener(new OnLongClickListener() {
 				@Override

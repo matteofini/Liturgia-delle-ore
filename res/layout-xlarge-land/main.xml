@@ -14,7 +14,7 @@
         android:layout_above="@+id/ViewFlipper1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" >
-
+
         <RelativeLayout
             android:id="@+id/ListContainer"
             android:layout_width="fill_parent"
@@ -23,8 +23,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout01"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
@@ -33,9 +33,9 @@
 
                 <Button
                     android:id="@+id/button_liturgiaore"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector"
                     android:clickable="true"
                     android:text="Liturgia delle Ore" >
@@ -44,8 +44,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout02"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
@@ -55,9 +55,9 @@
 
                 <Button
                     android:id="@+id/button_rosario"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector_blue"
                     android:clickable="true"
                     android:text="Rosario della B.V Maria" >
@@ -66,8 +66,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout03"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/LinearLayout01"
@@ -76,9 +76,9 @@
 
                 <Button
                     android:id="@+id/button_breviariumRomanum"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector_brown"
                     android:clickable="true"
                     android:text="Breviarium Romanum" >
@@ -87,8 +87,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout04"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/LinearLayout02"
@@ -97,9 +97,9 @@
 
                 <Button
                     android:id="@+id/button_4settSalterio"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector_green"
                     android:clickable="true"
                     android:text="4 sett. Salterio" >
@@ -108,8 +108,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout05"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/LinearLayout03"
@@ -118,9 +118,9 @@
 
                 <Button
                     android:id="@+id/button_bibbiaCEI"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector_gold"
                     android:clickable="true"
                     android:text="La Sacra Bibbia" >
@@ -129,8 +129,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout06"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/LinearLayout04"
@@ -139,9 +139,9 @@
 
                 <Button
                     android:id="@+id/button_magisteroChiesa"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector"
                     android:clickable="true"
                     android:text="Magistero della Chiesa" >
@@ -150,8 +150,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout07"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/LinearLayout05"
@@ -160,9 +160,9 @@
 
                 <Button
                     android:id="@+id/button_preghiere"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector_green"
                     android:clickable="true"
                     android:text="Preghiere" >
@@ -171,8 +171,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout08"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/LinearLayout06"
@@ -181,9 +181,9 @@
 
                 <Button
                     android:id="@+id/button_missaleRomanum"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector"
                     android:clickable="true"
                     android:text="Missale Romanum" >
@@ -192,8 +192,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout09"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/LinearLayout07"
@@ -202,9 +202,9 @@
 
                 <Button
                     android:id="@+id/button_ritodellamessa"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector_purple"
                     android:clickable="true"
                     android:text="Rito della Messa" >
@@ -213,8 +213,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout10"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/LinearLayout08"
@@ -223,9 +223,9 @@
 
                 <Button
                     android:id="@+id/button_conciliovaticanoII"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector"
                     android:clickable="true"
                     android:text="Concilio Vaticano II" >
@@ -234,8 +234,8 @@
 
             <LinearLayout
                 android:id="@+id/LinearLayout11"
-                style="@style/style_row"
-                android:layout_width="300dp"
+                style="@style/style_row_w1024dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/LinearLayout09"
@@ -244,9 +244,9 @@
 
                 <Button
                     android:id="@+id/button_catechismo"
-                    style="@style/style_text_w800dp"
+                    style="@style/style_text"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:background="@drawable/selector_orange"
                     android:clickable="true"
                     android:text="Catechismo della Chiesa" >

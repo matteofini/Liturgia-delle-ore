@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/item1" android:title="Start scroll"></item>
-
-    
-
+    <item android:id="@+id/item1" android:titleCondensed="Start" android:icon="@android:drawable/ic_media_play"></item>
+	<item android:id="@+id/item1" android:titleCondensed="Stop" android:icon="@android:drawable/ic_media_pause"></item>
+	<item android:id="@+id/item1" android:titleCondensed="Veloce" android:icon="@android:drawable/ic_media_ff"></item>
+	<item android:id="@+id/item1" android:titleCondensed="Lento" android:icon="@android:drawable/ic_media_rew"></item>
+	<item android:id="@+id/item1" android:titleCondensed="Ricarica" android:icon="@drawable/ic_menu_refresh"></item>
 </menu>

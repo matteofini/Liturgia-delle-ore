@@ -25,11 +25,13 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,7 +45,6 @@ import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
-
 
 class FilterDirectory implements FilenameFilter {
 	private String pattern;
@@ -177,18 +178,7 @@ public abstract class LiturgiaOreAbstr extends Activity {
 		return url;
 	}
 
-	/*
-	 * protected String getEntryName(String name) { String str = ""; if
-	 * (name.contains("Home")) str = "Home"; else if (name.contains("Liturgia"))
-	 * str = "Liturgia"; else if (name.contains("03-Messa")) str =
-	 * "Liturgia delle ore"; else if (name.contains("03-Salterio")) str =
-	 * "Salterio"; else if (name.contains("03-Breviarium")) str = "Breviario";
-	 * else if (name.contains("04-Bibbia")) str = "Bibbia"; else if
-	 * (name.contains("05-Magist")) str = "Magistero Chiesa"; else if
-	 * (name.contains("06-Preghiere")) str = "Preghiere"; else if
-	 * (name.contains("07-Missale")) str = "Messale Romano"; else str =
-	 * "http://www.maranatha.it"; return str; }
-	 */
+	
 
 	protected String open(String name, boolean forcedownload) {
 		String mName = name;
@@ -201,7 +191,6 @@ public abstract class LiturgiaOreAbstr extends Activity {
 				if (checkWritePermission()) {
 					String path = getSharedPreferenceValue("filepath",this);
 					download(mName, url, path);
-				
 				} else
 					showDialog(DIALOG_CODE.ERROR_SD_ONLY_READ);
 			} else
