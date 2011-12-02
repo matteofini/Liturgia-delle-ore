@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android" android:title="Impostazioni">
-  
-  <EditTextPreference
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+ <EditTextPreference
   	android:title="percorso download"
   	android:dialogTitle="percorso downlaod"
   	android:dialogMessage="esempio: /sdcard/download/"
   	android:defaultValue="/sdcard/download/"
   	android:key="filepath"/>
-  	
 </PreferenceScreen>

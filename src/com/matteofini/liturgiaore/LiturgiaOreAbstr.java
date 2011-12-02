@@ -31,7 +31,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -296,7 +295,7 @@ public abstract class LiturgiaOreAbstr extends Activity {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-		adb.setIcon(getResources().getDrawable(R.drawable.alert));
+		adb.setIcon(getResources().getDrawable(R.drawable.ic_menu_info));
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		String path = prefs.getString("filepath", "/sdcard/download/");
 

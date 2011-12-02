@@ -40,7 +40,7 @@ public class LiturgiaOrePreferences extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.preferences);
+		addPreferencesFromResource(R.xml.liturgiaore_preference);
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		//Toast.makeText(getApplicationContext(), prefs.getString("filepath", "/sdcard/download/"), Toast.LENGTH_LONG).show();
 		final Preference pref = (Preference) findPreference("filepath");
